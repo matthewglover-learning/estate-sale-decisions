@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Estate Sale Decisions — Version 2.0</title>
+  <style>
+    :root {--navy:#162838;--ink:#193246;--muted:#5b6c7a;--ivory:#f8f6f0;--paper:#fffdfa;--sage:#31776b;--accent:#e5a75a;--line:#e0e4e5;--subtle:#f1f4f2;--red:#9d4943;--sh:0 18px 48px rgba(22,40,56,.10)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ivory);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+    button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #e5a75a;outline-offset:3px}a{color:var(--sage)}
+    .top{background:var(--navy);color:#fff;min-height:65px;display:flex;align-items:center;justify-content:space-between;padding:12px max(4vw,18px);gap:12px}
+    .mark{font-size:13px;font-weight:800;letter-spacing:.18em;display:flex;align-items:center;gap:10px;text-transform:uppercase}.mark .square{width:27px;height:27px;border:2px solid var(--accent);border-radius:7px;display:grid;place-items:center;color:var(--accent);letter-spacing:0;font-size:15px}
+    .topmeta{font-size:12px;letter-spacing:.04em;color:#d1dce0}.tag{display:inline-block;border:1px solid #dae6df;background:#e9f1eb;color:#376453;font-size:11px;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:5px 9px;font-weight:800}
+    .shell{max-width:1000px;margin:0 auto;padding:38px 22px 54px}.hero{display:grid;grid-template-columns:1.6fr 1fr;gap:30px;align-items:center;margin-bottom:30px}
+    .eyebrow{text-transform:uppercase;font-weight:800;letter-spacing:.15em;color:var(--sage);font-size:11px}h1{font-size:clamp(35px,5.3vw,58px);line-height:1.06;letter-spacing:-.05em;margin:11px 0 15px;color:var(--navy);font-weight:780}h2{font-size:clamp(23px,3vw,31px);line-height:1.18;letter-spacing:-.03em;color:var(--navy);margin:8px 0 14px}h3{margin:0 0 10px;font-size:17px;color:var(--navy)}p{margin:0 0 13px}.lead{color:var(--muted);font-size:17px;max-width:560px}
+    .hero-side{background:#e6e8df;border-radius:18px;padding:22px 24px;min-height:175px;display:flex;flex-direction:column;justify-content:center;border:1px solid #d7ddd4}.hero-side .t{font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:#50695f;font-weight:800}.hero-side strong{font-size:29px;letter-spacing:-.04em;margin:9px 0 1px;color:#1d3b32}.hero-side p{font-size:13px;color:#4a6259;margin:0}
+    .card{background:var(--paper);border:1px solid #e5e6e1;border-radius:19px;box-shadow:var(--sh);overflow:hidden}.cardtop{border-bottom:1px solid var(--line);padding:22px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px}.pill{font-size:12px;font-weight:800;color:var(--sage);background:#eaf3ef;padding:7px 11px;border-radius:999px;white-space:nowrap}
+    .body{padding:26px 28px 30px}.subhead{font-size:12px;color:var(--muted);font-weight:750;letter-spacing:.09em;text-transform:uppercase;margin-bottom:8px}.scenario{background:#f3f4f0;border-left:4px solid var(--sage);border-radius:5px 10px 10px 5px;padding:16px 19px;margin:20px 0}.scenario p:last-child{margin-bottom:0}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;padding:12px 18px;border:1px solid var(--sage);background:var(--sage);color:white;font-weight:750;min-height:44px;transition:transform .15s,filter .15s}.button:hover{filter:brightness(.92)}.button:disabled{background:#bbc6c3;border-color:#bbc6c3;cursor:not-allowed}.button.secondary{background:transparent;color:var(--sage)}.button.small{min-height:36px;padding:8px 11px;font-size:13px}
+    .choices{display:grid;gap:10px;margin-top:18px}.choice{width:100%;border:1.5px solid #dce3e0;border-radius:12px;text-align:left;padding:16px 17px;background:white;color:var(--ink);display:flex;align-items:flex-start;gap:13px}.choice .letter{flex:none;border:1px solid #d7ddd8;width:27px;height:27px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;color:#6d807a}.choice span:last-child{font-size:15px}.choice:hover{border-color:#8aa89e;background:#fcfefb}.choice.selected{border-color:var(--sage);background:#ecf5f0}.choice.selected .letter{background:var(--sage);color:white;border-color:var(--sage)}.choice[disabled]{cursor:default}.feedback{margin-top:22px;padding:19px;border-radius:12px;background:#eef5ee;border:1px solid #cbdcd2}.feedback.caution{background:#fff5ec;border-color:#edcfb7}.feedback h3{font-size:15px}.feedback p{color:#344f4c;font-size:14px;margin:0}.feedback.caution p{color:#614e44}.nav{margin-top:24px;display:flex;justify-content:flex-end}.steps{display:flex;gap:6px;align-items:center}.step{height:6px;width:28px;border-radius:30px;background:#dce5e0}.step.done{background:#31776b}.step.active{background:var(--accent)}.footnote{font-size:12px;color:var(--muted);margin-top:20px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:18px 0}.stat{border:1px solid var(--line);background:#f7f9f5;padding:17px;border-radius:12px}.stat small{display:block;color:var(--muted);margin-bottom:5px}.stat strong{display:block;font-size:24px;letter-spacing:-.035em}.reflection{padding:18px;background:#f2f4f0;border-radius:12px;margin-top:15px}.reflection li{margin-bottom:9px}.mute{color:var(--muted)}.hidden{display:none!important}.endbadges{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.endbadges span{border:1px solid var(--line);background:white;border-radius:999px;padding:5px 10px;font-size:12px}.footer{max-width:1000px;padding:0 22px 30px;margin:0 auto;color:var(--muted);font-size:12px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}.info{padding:17px;background:#f5f7f3;border:1px solid #e4e7e0;border-radius:12px}.mini-table{border-collapse:collapse;width:100%;font-size:14px}.mini-table td{padding:8px 0;border-bottom:1px solid var(--line)}.mini-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}.mini-table .total td{font-weight:850;border-bottom:0;padding-top:15px}.spaced{margin-top:18px}
+    @media(max-width:720px){.hero{grid-template-columns:1fr;gap:12px}.hero-side{min-height:auto}.cardtop,.body{padding:19px}.topmeta{display:none}.stats{grid-template-columns:1fr}.twocol{grid-template-columns:1fr}.shell{padding:24px 14px 30px}.footer{padding:0 14px 22px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
+    @media print{.top{background:#fff;color:#111;border-bottom:1px solid #ccc}.button,.footer{display:none!important}.card{box-shadow:none}.shell{padding-top:20px}}
+  </style>
+
+<style>
+/* Portfolio edition: enhanced visual hierarchy and interaction */
+:root{--navy:#102638;--sage:#246d64;--accent:#d99b46;--sh:0 24px 65px rgba(16,38,56,.13)}
+body{background:radial-gradient(ellipse at 88% 4%,#e6eee8 0%,transparent 36%),linear-gradient(150deg,#faf8f3,#f1f5f1)}
+.top{box-shadow:0 5px 24px rgba(16,38,56,.12)}
+.shell{max-width:1050px}
+.hero{position:relative}
+.card{box-shadow:var(--sh);border:1px solid #d9e4df}
+.button{transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}
+.button:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(16,38,56,.14)}
+.choice{transition:transform .16s ease,border-color .16s ease,background-color .16s ease}
+.choice:not(:disabled):hover{transform:translateY(-2px);border-color:var(--sage);background:#f4faf7}
+.choice:focus-visible,.button:focus-visible{outline:3px solid #e5a75a;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+  <header class="top">
+    <div class="mark"><span class="square">D</span>Decision Practice <span style="font-weight:400;opacity:.7">/ Concept Lab</span></div>
+    <div class="topmeta">OFFLINE PILOT · NO ACCOUNT · NO DATA COLLECTION</div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div><div class="eyebrow">Interactive learning · Portfolio demonstration</div><h1>Estate Sale Decisions</h1><p class="lead">A short, fictional case study in project planning, client communication, and operational judgment.</p></div>
+      <div class="hero-side"><div class="t">Your assignment</div><strong>The Alder House</strong><p>Four connected decisions. One fictional client. Approximately 5–8 minutes. Earlier choices influence later project conditions.</p></div>
+    </section>
+    <section class="card" id="screen" aria-live="polite">
+      <div class="cardtop"><div><div class="subhead" id="phase">Start here</div><strong id="header-title">Your first client assignment</strong></div><div class="steps" id="progress" aria-label="Progress"></div></div>
+      <div class="body" id="content"></div>
+    </section>
+    <p class="footnote">This is a fictional demonstration for educator review, not professional guidance, training certification, or a commercial product. Figures and recommended responses require subject-matter expert validation before classroom use.</p>
+  </main>
+  <footer class="footer">© 2026 · Original proof-of-concept demonstration · Working label only; no commercial brand asserted · All activity stays in this browser. No external resources or analytics.</footer>
+  <script>
+  (() => {
+    'use strict';
+    const decisions=[
+      {
+        section:'01 / CLIENT INTAKE', title:'Set expectations before the sale',
+        story:'A client asks you to guarantee that their household sale will bring in at least $8,000. You have not completed inventory or evaluated market demand. What is your best next step?',
+        options:[
+          {t:'Guarantee $8,000 to secure the job.',points:0,good:false,feedback:'This creates a commitment before you have a defensible basis for one. A learner should explore the risk of promises that cannot be supported.'},
+          {t:'Explain that figures are estimates, document the scope and assumptions, and confirm the terms in writing.',points:1,good:true,feedback:'This is the preferred instructional response for the prototype: communicate uncertainty, document what is included, and make expectations explicit.'},
+          {t:'Avoid discussing proceeds until the sale is over.',points:0,good:false,feedback:'Avoiding the topic leaves an important client expectation unresolved and may create confusion later.'}
+        ]
+      },
+      {
+        section:'02 / PREPARATION', title:'Staff the preparation window',
+        story:'The fictional project has three moderately furnished rooms to prepare in a six-hour window. For this exercise, assume a worker costs $22 per hour, and the case writer estimates roughly 12 person-hours of preparation work. Which staffing plan would you choose?',
+        options:[
+          {t:'One worker for six hours, costing $132.',labor:132,points:0,good:false,feedback:'Lower labor expense, but the case assumes 12 person-hours of work. One worker supplies only six, putting timely completion at risk.'},
+          {t:'Two workers for six hours, costing $264.',labor:264,points:1,good:true,feedback:'This meets the case assumption of 12 person-hours at the lowest labor cost among plans that meet the stated time requirement.'},
+          {t:'Three workers for six hours, costing $396.',labor:396,points:0,good:false,feedback:'This provides extra capacity but costs $132 more than the two-worker plan. A real project may justify it for other reasons, but the fictional case supplies no such requirement.'}
+        ]
+      },
+      {
+        section:'03 / CLIENT CHANGES', title:'Protect a family heirloom',
+        story:'One day before the sale, the client asks you to exclude a jewelry box previously marked for sale. Your team has already started preparing the displays. What do you do?',
+        options:[
+          {t:'Remove it quietly without updating any records.',points:0,good:false,feedback:'Removing the item without documenting the change can leave team members working from conflicting information.'},
+          {t:'Confirm the change in writing, update the item list, and notify the staff handling the sale.',points:1,good:true,feedback:'The recommended response in this fictional exercise is to document the client’s wishes and make sure the team has the same information.'},
+          {t:'Wait until the sale opens to decide.',points:0,good:false,feedback:'Waiting could create unnecessary risk that an excluded item remains available during setup or opening.'}
+        ]
+      },
+      {
+        section:'04 / PROJECT CLOSEOUT', title:'Close the loop with your client',
+        story:'The fictional sale is complete. You need to explain proceeds and costs. What should your closing communication include?',
+        options:[
+          {t:'A clear written statement showing gross proceeds, the agreed commission, any authorized deductions, and the client payout.',points:1,good:true,feedback:'The recommended learning objective is transparent, understandable reconciliation consistent with the client agreement.'},
+          {t:'A verbal statement of the total payout only.',points:0,good:false,feedback:'A single number makes it difficult for a client to understand how the payout was determined.'},
+          {t:'Only a transfer receipt, without supporting figures.',points:0,good:false,feedback:'A receipt demonstrates a payment, but not the reconciliation of the project.'}
+        ]
+      }
+    ];
+    const state={index:-1,selected:null,answers:[],complete:false};
+    const progress=document.getElementById('progress');const phase=document.getElementById('phase');const head=document.getElementById('header-title');const content=document.getElementById('content');
+    const money=n=>'$'+n.toLocaleString('en-US',{maximumFractionDigits:0});
+    function setProgress(){progress.innerHTML=Array.from({length:4},(_,i)=>`<span class="step ${state.complete||i<state.index?'done':i===state.index?'active':''}" aria-hidden="true"></span>`).join('');progress.setAttribute('aria-label',state.complete?'All four steps completed':state.index<0?'Ready to begin':`${state.index+1} of 4 decisions`)}
+    function btn(text,action,extra=''){return `<button class="button ${extra}" type="button" data-action="${action}">${text}</button>`}
+    function render(){setProgress();if(state.index<0){phase.textContent='INTRODUCTION';head.textContent='A fictional client case';content.innerHTML=`<span class="tag">5–8 minutes · guided exercise</span><h2>Can you manage the Alder House project?</h2><p>A student takes the role of an estate-sale operator handling a fictional household sale.</p><div class="twocol spaced"><div class="info"><h3>What you practice</h3><p>Client expectations, labor planning, change documentation, and financial closeout.</p></div><div class="info"><h3>How it works</h3><p>Make four linked decisions. See how earlier choices shape later situations, get tailored coaching, and review a closing financial model.</p></div></div><p class="mute spaced">This sample is intended to invite educator feedback—not to claim that it reflects all estate-sale rules or best practices.</p><div class="nav">${btn('Start exercise  →','start')}</div>`;return;}
+    if(state.complete){renderEnd();return;}
+    const d=decisions[state.index];const prior=state.answers;
+    const context=state.index===1?(prior[0]===1?'The client appreciated your transparent estimate and has supplied a complete inventory.':'The client remains uncertain about the expected proceeds, adding pressure to your preparation timeline.'):state.index===2?(prior[1]===1?'Your two-worker team finished preparation on schedule. The change can be addressed with clear records.':prior[1]===0?'Your small team is behind schedule. A last-minute exclusion now creates additional risk.':'Your larger team has capacity to handle the change, but labor costs are higher.'):state.index===3?(prior[2]===1?'The excluded item is documented, so your closing records are consistent.':'The item-change process was not fully documented. Reconciliation will need extra attention.'):'';
+    phase.textContent=d.section;head.textContent=`Decision ${state.index+1} of 4`;
+    content.innerHTML=`<span class="tag">Fictional practice case</span><h2>${d.title}</h2><div class="scenario"><div class="subhead">Scenario</div><p>${d.story}</p>${context?`<p><strong>Consequence of earlier decisions:</strong> ${context}</p>`:""}</div><h3>What would you do?</h3><div class="choices" role="group" aria-label="Choose your response">${d.options.map((o,i)=>`<button class="choice ${state.selected===i?'selected':''}" data-choice="${i}" type="button" ${state.selected!==null?'disabled':''}><span class="letter">${String.fromCharCode(65+i)}</span><span>${o.t}</span></button>`).join('')}</div><div id="feedback" aria-live="polite">${state.selected!==null?feedbackHTML(d.options[state.selected]):''}</div><div class="nav">${state.selected!==null?btn(state.index===3?'See your project summary  →':'Next decision  →','next'):''}</div>`;
+    }
+    function feedbackHTML(o){return `<div class="feedback ${o.good?'':'caution'}"><h3>${o.good?'Good instructional choice':'Consider the trade-off'}</h3><p>${o.feedback}</p></div>`;}
+    function renderEnd(){phase.textContent='REVIEW';head.textContent='Practice complete';const score=state.answers.reduce((n,a,i)=>n+decisions[i].options[a].points,0);const gross=8000,commission=.35,companyRevenue=gross*commission,clientPayout=gross-companyRevenue,labor=decisions[1].options[state.answers[1]].labor;const fixed=480,operating=companyRevenue-labor-fixed;
+      const coaching=state.answers.map((a,i)=>({title:decisions[i].title,choice:decisions[i].options[a].t,feedback:decisions[i].options[a].feedback,good:decisions[i].options[a].good}));
+      const coachingHTML=coaching.map((c,i)=>`<div class="info" style="margin-top:12px"><div class="subhead">Decision ${i+1} · ${c.good?'Preferred response':'Opportunity to improve'}</div><h3>${c.title}</h3><p><strong>Your choice:</strong> ${c.choice}</p><p>${c.feedback}</p></div>`).join('');
+      const narrative=score===4?'You balanced transparency, staffing, scope control, and closeout in this illustrative case.':score>=2?'Your project includes some sound choices alongside risks worth reviewing.':'Your decisions illustrate how operational risks can compound when communication or planning breaks down.';
+      content.innerHTML=`<span class="tag">Exercise complete · educator review demo</span><h2>Your Alder House project summary</h2><p><strong>${narrative}</strong></p><p class="mute">This report combines your choices with a <strong>fictional</strong> financial example. It is not a prediction of real estate-sale results.</p><div class="stats"><div class="stat"><small>Recommended practice choices</small><strong>${score} / 4</strong></div><div class="stat"><small>Your staffing cost</small><strong>${money(labor)}</strong></div><div class="stat"><small>Illustrative operating result</small><strong>${money(operating)}</strong></div></div><div class="twocol"><div class="info"><h3>Case calculations</h3><table class="mini-table"><tr><td>Fictional gross sale proceeds</td><td>${money(gross)}</td></tr><tr><td>Company commission (35%)</td><td>${money(companyRevenue)}</td></tr><tr><td>Client payout before other adjustments</td><td>${money(clientPayout)}</td></tr><tr><td>Staffing expense (your selection)</td><td>−${money(labor)}</td></tr><tr><td>Assumed other operating costs</td><td>−${money(fixed)}</td></tr><tr class="total"><td>Company project contribution*</td><td>${money(operating)}</td></tr></table></div><div class="info"><h3>Instructor discussion prompts</h3><ol style="padding-left:18px;margin:8px 0"><li>How did your staffing decision affect the model?</li><li>What information would you request before estimating actual sale proceeds?</li><li>How would you confirm client exclusions?</li><li>How could written closeout improve trust?</li></ol></div></div><h3 style="margin-top:24px">Your personalized decision review</h3>${coachingHTML}<div class="reflection"><strong>Important limitation</strong><p class="mute" style="margin-top:6px;margin-bottom:0">*Project contribution shown here excludes business overhead, insurance, taxes, payment fees, returns, chargebacks and contract-specific adjustments. The scenario's figures and preferred decisions are illustrative and require validation by a qualified estate-sale educator before classroom use. This activity does not provide legal, financial, fiduciary or professional advice.</p></div><div class="endbadges"><span>Works offline</span><span>No login</span><span>No personal data collected</span><span>Content awaiting expert review</span></div><div class="nav">${btn('Start again  ↻','reset','secondary')}</div>`;
+    }
+    document.getElementById('screen').addEventListener('click',e=>{const opt=e.target.closest('[data-choice]');const act=e.target.closest('[data-action]');if(opt && state.index>=0&&!state.complete&&state.selected===null){const idx=Number(opt.dataset.choice);if(idx>=0&&idx<3){state.selected=idx;render();document.getElementById('feedback').scrollIntoView({block:'nearest',behavior:'smooth'})}return;}
+      if(!act)return;switch(act.dataset.action){case 'start':state.index=0;state.selected=null;break;case 'next':if(state.selected===null)return;state.answers.push(state.selected);state.index++;state.selected=null;if(state.index>=4)state.complete=true;break;case 'reset':state.index=-1;state.selected=null;state.answers=[];state.complete=false;break;default:return;}render();document.getElementById('screen').scrollIntoView({block:'start',behavior:'smooth'});
+    });render();
+  })();
+  </script>
+</body>
+</html>
